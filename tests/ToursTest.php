@@ -8,12 +8,29 @@ namespace vladimino\CHGKDB;
  */
 class ToursTest extends \PHPUnit_Framework_TestCase
 {
+    private $tours;
+
+    /**
+     *
+     */
+    public function setUp()
+    {
+        $this->tours = $tours = new Tours();
+    }
+
     /**
      * Dummy test
      */
     public function testCanInstantiate()
     {
-        $tours = new Tours();
-        $this->assertTrue(is_object($tours));
+        $this->assertTrue(is_object($this->tours));
+    }
+
+    /**
+     *
+     */
+    public function testCanReadConfig()
+    {
+        $this->assertNotEmpty($this->tours->getConfig('base_url'));
     }
 }
