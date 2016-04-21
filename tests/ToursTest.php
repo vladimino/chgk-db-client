@@ -2,6 +2,9 @@
 
 namespace vladimino\CHGKDB;
 
+use GuzzleHttp\Client;
+use Symfony\Component\Yaml\Parser;
+
 /**
  * Class ToursTest
  * @package vladimino\CHGKDB
@@ -18,7 +21,10 @@ class ToursTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->tours = $tours = new Tours();
+        $this->tours = new Tours(
+            (new Parser()),
+            (new Client())
+        );
     }
 
     /**
