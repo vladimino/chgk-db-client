@@ -2,6 +2,8 @@
 
 namespace vladimino\CHGKDB\Resource;
 
+use vladimino\CHGKDB\Converter\ToursConverter;
+
 /**
  * Class Tours
  * @package vladimino\CHGKDB
@@ -14,7 +16,8 @@ class Tours extends AbstractResource
     public function retrieveRootPage()
     {
         $response = $this->client->request('GET', $this->getToursUrl());
-        $toursCollection = new \SimpleXMLElement($response->getBody());
+        $rawTours = new \SimpleXMLElement($response->getBody());
+        $toursCollection = (new ToursConverter($rawTours))->getToursCollection();
 
         return $toursCollection;
     }

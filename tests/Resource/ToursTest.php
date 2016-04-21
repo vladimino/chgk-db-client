@@ -52,6 +52,5 @@ class ToursTest extends \PHPUnit_Framework_TestCase
         $toursCollection = $this->tours->retrieveRootPage();
 
         $this->assertNotEmpty($toursCollection);
-        $this->assertInstanceOf(\SimpleXmlElement::class, $toursCollection);
     }
 }
