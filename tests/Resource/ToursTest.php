@@ -1,6 +1,6 @@
 <?php
 
-namespace vladimino\CHGKDB;
+namespace vladimino\CHGKDB\Resource;
 
 use GuzzleHttp\Client;
 use Symfony\Component\Yaml\Parser;

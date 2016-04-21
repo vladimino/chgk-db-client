@@ -1,6 +1,6 @@
 <?php
 
-namespace vladimino\CHGKDB;
+namespace vladimino\CHGKDB\Resource;
 
 use GuzzleHttp\Client;
 use Symfony\Component\Yaml\Parser;
@@ -9,12 +9,12 @@ use Symfony\Component\Yaml\Parser;
  * Class BaseResource
  * @package vladimino\CHGKDB
  */
-class BaseResource
+abstract class AbstractResource
 {
     /**
      * Path to config file
      */
-    const CONFIG_FILE = __DIR__.'/../config/config.yaml';
+    const CONFIG_FILE = __DIR__.'/../../config/config.yaml';
 
     /**
      * Configuration

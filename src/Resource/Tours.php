@@ -1,12 +1,12 @@
 <?php
 
-namespace vladimino\CHGKDB;
+namespace vladimino\CHGKDB\Resource;
 
 /**
  * Class Tours
  * @package vladimino\CHGKDB
  */
-class Tours extends BaseResource
+class Tours extends AbstractResource
 {
     /**
      * @return mixed
