@@ -8,6 +8,9 @@ namespace vladimino\CHGKDB;
  */
 class ToursTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Tours
+     */
     private $tours;
 
     /**
@@ -19,18 +22,30 @@ class ToursTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Dummy test
+     *
      */
-    public function testCanInstantiate()
+    public function testCanGetConfig()
     {
-        $this->assertTrue(is_object($this->tours));
+        $this->assertNotEmpty($this->tours->getConfig());
+        $this->assertInternalType('array', $this->tours->getConfig());
     }
 
     /**
      *
      */
-    public function testCanReadConfig()
+    public function testGetConfigParam()
     {
         $this->assertNotEmpty($this->tours->getConfig('base_url'));
+    }
+
+    /**
+     *
+     */
+    public function testRetrieveToursRootPage()
+    {
+        $toursCollection = $this->tours->retrieveRootPage();
+
+        $this->assertNotEmpty($toursCollection);
+        $this->assertInstanceOf(\SimpleXmlElement::class, $toursCollection);
     }
 }
