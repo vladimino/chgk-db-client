@@ -31,9 +31,32 @@ class ToursConverter
         $toursCollection = [];
 
         foreach ($this->rawTours->tour as $rawTour) {
-            $toursCollection[] = (array)$rawTour;
+            $toursCollection[] = (array) $rawTour;
         }
 
         return $toursCollection;
+    }
+
+    /**
+     * @return array
+     */
+    public function getToursMeta()
+    {
+        $meta = array_filter(
+            (array) $this->rawTours,
+            function ($k) {
+                return $k !== 'tour';
+            },
+            ARRAY_FILTER_USE_KEY
+        );
+
+        $meta = array_map(
+            function ($value) {
+                return (string) $value;
+            },
+            $meta
+        );
+
+        return $meta;
     }
 }

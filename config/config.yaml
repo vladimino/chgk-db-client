@@ -1,3 +1,4 @@
 base_url:   http://db.chgk.info/
 format:     xml
 tours_slug: tour/
+authors_slug: AUTHORS

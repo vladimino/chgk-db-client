@@ -22,8 +22,36 @@ class Tours extends AbstractResource
         return $toursCollection;
     }
 
-    private function getToursUrl()
+    /**
+     * @return mixed
+     */
+    public function retrieveAuthorsPage()
     {
-        return $this->config['base_url'].$this->config['tours_slug'].$this->config['format'];
+        $response = $this->client->request(
+            'GET',
+            $this->getToursUrl($this->getConfig('authors_slug'))
+        );
+
+        $rawTours = new \SimpleXMLElement($response->getBody());
+        $converter = new ToursConverter($rawTours);
+        $toursPage = [
+            'meta'  => $converter->getToursMeta(),
+            'tours' => $converter->getToursCollection(),
+        ];
+
+        return $toursPage;
+    }
+
+    private function getToursUrl($slug = '')
+    {
+        return $this->getToursBaseUrl().$slug.'/'.$this->config['format'];
+    }
+
+    /**
+     * @return string
+     */
+    private function getToursBaseUrl()
+    {
+        return $this->config['base_url'].$this->config['tours_slug'];
     }
 }

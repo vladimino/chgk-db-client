@@ -53,4 +53,16 @@ class ToursTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNotEmpty($toursCollection);
     }
+
+    /**
+     *
+     */
+    public function testRetrieveToursAuthorsPage()
+    {
+        $toursPage = $this->tours->retrieveAuthorsPage();
+
+        $this->assertNotEmpty($toursPage);
+        $this->assertArrayHasKey('meta', $toursPage);
+        $this->assertArrayHasKey('tours', $toursPage);
+    }
 }
