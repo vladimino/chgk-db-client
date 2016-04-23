@@ -55,4 +55,31 @@ abstract class AbstractResource
 
         return array_key_exists($param, $this->config) ? $this->config[$param] : null;
     }
+
+    /**
+     * @param string $url
+     *
+     * @return \SimpleXMLElement
+     */
+    protected function getResponse($url)
+    {
+        $response = $this->client->request('GET', $url);
+
+        return new \SimpleXMLElement($response->getBody());
+    }
+
+    /**
+     * @return string
+     */
+    abstract protected function getBaseUrl();
+
+    /**
+     * @param string $slug
+     *
+     * @return string
+     */
+    protected function getFullUrl($slug = '')
+    {
+        return $this->getBaseUrl().$slug.'/'.$this->config['format'];
+    }
 }

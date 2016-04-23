@@ -15,6 +15,10 @@ class ToursTest extends \PHPUnit_Framework_TestCase
      * @var Tours
      */
     private $tours;
+    /**
+     * @var string
+     */
+    private $tourList = 'AUTHORS';
 
     /**
      *
@@ -49,20 +53,25 @@ class ToursTest extends \PHPUnit_Framework_TestCase
      */
     public function testRetrieveToursRootPage()
     {
-        $toursCollection = $this->tours->retrieveRootPage();
+        $toursPage = $this->tours->retrieveTourListPage('AUTHORS');
 
-        $this->assertNotEmpty($toursCollection);
+        $this->assertNotEmpty($toursPage);
+        $this->assertArrayHasKey('meta', $toursPage);
+        $this->assertArrayHasKey('tours', $toursPage);
+        $this->assertNotEmpty($toursPage['tours']);
     }
 
     /**
      *
      */
-    public function testRetrieveToursAuthorsPage()
+    public function testRetrieveTourListAuthorsPage()
     {
-        $toursPage = $this->tours->retrieveAuthorsPage();
+        $toursPage = $this->tours->retrieveTourListPage($this->tourList);
 
         $this->assertNotEmpty($toursPage);
         $this->assertArrayHasKey('meta', $toursPage);
         $this->assertArrayHasKey('tours', $toursPage);
+        $this->assertEquals($this->tourList, $toursPage['meta']['TextId']);
+        $this->assertNotEmpty($toursPage['tours']);
     }
 }

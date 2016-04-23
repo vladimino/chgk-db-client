@@ -9,28 +9,15 @@ namespace vladimino\CHGKDB\Converter;
 class ToursConverter
 {
     /**
-     * @var \SimpleXMLElement
-     */
-    private $rawTours;
-
-    /**
-     * ToursConverter constructor.
-     *
      * @param \SimpleXMLElement $rawTours
-     */
-    public function __construct(\SimpleXMLElement $rawTours)
-    {
-        $this->rawTours = $rawTours;
-    }
-
-    /**
+     *
      * @return array
      */
-    public function getToursCollection()
+    public function getToursCollection($rawTours)
     {
         $toursCollection = [];
 
-        foreach ($this->rawTours->tour as $rawTour) {
+        foreach ($rawTours->tour as $rawTour) {
             $toursCollection[] = (array) $rawTour;
         }
 
@@ -38,12 +25,14 @@ class ToursConverter
     }
 
     /**
+     * @param \SimpleXMLElement $rawTours
+     *
      * @return array
      */
-    public function getToursMeta()
+    public function getToursMeta($rawTours)
     {
         $meta = array_filter(
-            (array) $this->rawTours,
+            (array) $rawTours,
             function ($k) {
                 return $k !== 'tour';
             },

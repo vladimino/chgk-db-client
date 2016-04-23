@@ -2,6 +2,8 @@
 
 namespace vladimino\CHGKDB\Resource;
 
+use GuzzleHttp\Client;
+use Symfony\Component\Yaml\Parser;
 use vladimino\CHGKDB\Converter\ToursConverter;
 
 /**
@@ -11,46 +13,42 @@ use vladimino\CHGKDB\Converter\ToursConverter;
 class Tours extends AbstractResource
 {
     /**
-     * @return mixed
+     * @var ToursConverter
      */
-    public function retrieveRootPage()
-    {
-        $response = $this->client->request('GET', $this->getToursUrl());
-        $rawTours = new \SimpleXMLElement($response->getBody());
-        $toursCollection = (new ToursConverter($rawTours))->getToursCollection();
+    private $converter;
 
-        return $toursCollection;
+    /**
+     * Tours constructor.
+     *
+     * @param Parser $parser
+     * @param Client $client
+     */
+    public function __construct(Parser $parser, Client $client)
+    {
+        parent::__construct($parser, $client);
+        $this->converter = new ToursConverter();
     }
 
     /**
-     * @return mixed
+     * @param string $tourTextId
+     *
+     * @return array
      */
-    public function retrieveAuthorsPage()
+    public function retrieveTourListPage($tourTextId = '')
     {
-        $response = $this->client->request(
-            'GET',
-            $this->getToursUrl($this->getConfig('authors_slug'))
-        );
-
-        $rawTours = new \SimpleXMLElement($response->getBody());
-        $converter = new ToursConverter($rawTours);
+        $rawTours = $this->getResponse($this->getFullUrl($tourTextId));
         $toursPage = [
-            'meta'  => $converter->getToursMeta(),
-            'tours' => $converter->getToursCollection(),
+            'meta'  => $this->converter->getToursMeta($rawTours),
+            'tours' => $this->converter->getToursCollection($rawTours),
         ];
 
         return $toursPage;
     }
 
-    private function getToursUrl($slug = '')
-    {
-        return $this->getToursBaseUrl().$slug.'/'.$this->config['format'];
-    }
-
     /**
      * @return string
      */
-    private function getToursBaseUrl()
+    protected function getBaseUrl()
     {
         return $this->config['base_url'].$this->config['tours_slug'];
     }
